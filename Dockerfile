@@ -48,7 +48,12 @@ RUN cd /tmp && \
 	make && \
 	make install
 
-COPY . /usr/local/src/janus-gateway
+RUN mkdir -p /usr/local/src/janus-gateway
+RUN cd /tmp && \
+	git clone https://github.com/meetecho/janus-gateway.git && \
+	cd janus-gateway && \
+	git checkout tags/v1.2.4
+RUN cp -r /tmp/janus-gateway/* /usr/local/src/janus-gateway
 
 RUN cd /usr/local/src/janus-gateway && \
 	sh autogen.sh && \
